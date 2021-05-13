@@ -20,14 +20,19 @@ const simbolos = [
 	')',
 ]
 
+function agruparPalavras() {}
+
 fn.lerDiretorio(caminho)
+	// a resposta da função retorna uma nova função
 	.then(fn.elementosTerminadosCom('.srt'))
 	.then(fn.lerArquivos)
-	.then(conteudos => conteudos.join('\n'))
-	.then(todoConteudo => todoConteudo.split('\n'))
+	.then(fn.mesclarElementos)
+	.then(fn.separarTextoPor('\n'))
 	.then(fn.removerElementosSeVazio)
-	// a resposta da função retorna uma nova função
 	.then(fn.removerElementosSeIncluir('-->'))
 	.then(fn.removerElementosApenasNumeros)
 	.then(fn.removerSimbolos(simbolos))
+	.then(fn.mesclarElementos)
+	.then(fn.separarTextoPor(' '))
+	.then(fn.removerElementosSeVazio)
 	.then(console.log)
