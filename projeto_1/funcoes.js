@@ -4,10 +4,12 @@ const path = require('path')
 function lerDiretorio(caminho) {
 	return new Promise((resolve, reject) => {
 		try {
-			let arquivos = fs.readdirSync(caminho)
-			arquivos = arquivos.map(arquivo => path.join(caminho, arquivo))
+			const arquivos = fs.readdirSync(caminho)
+			const arquivosCompletos = arquivos.map(arquivo =>
+				path.join(caminho, arquivo)
+			)
 
-			resolve(arquivos)
+			resolve(arquivosCompletos)
 		} catch (e) {
 			reject(e)
 		}
@@ -60,13 +62,9 @@ function removerElementosApenasNumeros(array) {
 function removerSimbolos(simbolos) {
 	return function (array) {
 		return array.map(el => {
-			let textoSemSimbolos = el
-
-			simbolos.forEach(simbolo => {
-				textoSemSimbolos = textoSemSimbolos.split(simbolo).join('')
-			})
-
-			return textoSemSimbolos
+			return simbolos.reduce((acc, simbolo) => {
+				return acc.split(simbolo).join('')
+			}, el)
 		})
 	}
 }
