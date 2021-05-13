@@ -29,12 +29,28 @@ function lerArquivos(caminhos) {
 	return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
 }
 
-function elementosTerminadosCom(array, padrao) {
-	return array.filter(el => el.endsWith(padrao))
+function elementosTerminadosCom(array, padraoTextual) {
+	return array.filter(el => el.endsWith(padraoTextual))
 }
 
 function removerSeVazio(array) {
 	return array.filter(el => el.trim())
+}
+
+function removerSeIncluir(array, padraoTextual) {
+	return array.filter(el => !el.includes(padraoTextual))
+}
+
+function removerApenasNumeros(array) {
+	return array.filter(el => {
+		// removendo espaços em branco
+		const num = parseInt(el.trim())
+		// quando o num for string, retorna NaN
+		// quando o num for numero, retorna o número
+
+		// retorna quando não tem um valor numérico
+		return num !== num
+	})
 }
 
 module.exports = {
@@ -43,4 +59,6 @@ module.exports = {
 	lerArquivos,
 	elementosTerminadosCom,
 	removerSeVazio,
+	removerSeIncluir,
+	removerApenasNumeros,
 }
