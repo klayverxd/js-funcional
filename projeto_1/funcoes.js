@@ -29,19 +29,23 @@ function lerArquivos(caminhos) {
 	return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
 }
 
-function elementosTerminadosCom(array, padraoTextual) {
-	return array.filter(el => el.endsWith(padraoTextual))
+function elementosTerminadosCom(padraoTextual) {
+	return function (array) {
+		return array.filter(el => el.endsWith(padraoTextual))
+	}
 }
 
-function removerSeVazio(array) {
+function removerElementosSeVazio(array) {
 	return array.filter(el => el.trim())
 }
 
-function removerSeIncluir(array, padraoTextual) {
-	return array.filter(el => !el.includes(padraoTextual))
+function removerElementosSeIncluir(padraoTextual) {
+	return function (array) {
+		return array.filter(el => !el.includes(padraoTextual))
+	}
 }
 
-function removerApenasNumeros(array) {
+function removerElementosApenasNumeros(array) {
 	return array.filter(el => {
 		// removendo espaços em branco
 		const num = parseInt(el.trim())
@@ -53,12 +57,27 @@ function removerApenasNumeros(array) {
 	})
 }
 
+function removerSimbolos(simbolos) {
+	return function (array) {
+		return array.map(el => {
+			let textoSemSimbolos = el
+
+			simbolos.forEach(simbolo => {
+				textoSemSimbolos = textoSemSimbolos.split(simbolo).join('')
+			})
+
+			return textoSemSimbolos
+		})
+	}
+}
+
 module.exports = {
 	lerDiretorio,
 	lerArquivo,
 	lerArquivos,
 	elementosTerminadosCom,
-	removerSeVazio,
-	removerSeIncluir,
-	removerApenasNumeros,
+	removerElementosSeVazio,
+	removerElementosSeIncluir,
+	removerElementosApenasNumeros,
+	removerSimbolos,
 }
